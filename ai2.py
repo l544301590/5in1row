@@ -1,5 +1,14 @@
 # -*-coding:utf-8-*-
+board = [[0 for j in range(15)] for i in range(15)]
 
+def func(rx, ry):
+    """
+    返回下一步落子x, y
+    :param rx:
+    :param ry:
+    :return:
+    """
+    board[ry]
 
 if __name__ == '__main__':
     import json

@@ -4,7 +4,7 @@
 # WW = 800
 # WWW = 15000
 # WWWW = 800000
-crt1 = [7, 35, 800, 1500, 800000]  # 自己落子
+crt1 = [7, 35, 800, 15000, 800000]  # 自己落子
 # B = 15
 # BB = 400
 # BBB = 1800
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     curr_input = all_requests[-1]
     if curr_input["x"] >= 0 and curr_input["y"] >= 0:
         b[curr_input["x"]][curr_input["y"]] = 0
-        x, y = play(b, 1)
+        x, y, table = play(b, 1)
     else:
         b[8][8] = 1
 

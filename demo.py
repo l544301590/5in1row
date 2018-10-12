@@ -110,6 +110,8 @@ def win(grid, x, y, side):
         o = 0
         try:
             for o in range(-4 + i, -4 + i + 5):
+                if x + o < 0:
+                    break
                 if grid[x + o][y] != side:
                     break
             else:
@@ -121,6 +123,8 @@ def win(grid, x, y, side):
         o = 0
         try:
             for o in range(-4 + i, -4 + i + 5):
+                if y + o < 0:
+                    break
                 if grid[x][y + o] != side:
                     break
             else:
@@ -132,6 +136,8 @@ def win(grid, x, y, side):
         o = 0
         try:
             for o in range(-4 + i, -4 + i + 5):
+                if x + o < 0 or y + o < 0:
+                    break
                 if grid[x + o][y + o] != side:
                     break
             else:
@@ -143,6 +149,8 @@ def win(grid, x, y, side):
         o = 0
         try:
             for o in range(-4 + i, -4 + i + 5):
+                if x + o < 0 or y - o < 0:
+                    break
                 if grid[x + o][y - o] != side:
                     break
             else:
