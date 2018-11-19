@@ -62,10 +62,10 @@ class GameWin(tk.Frame):
 
     def click_canvas(self, evt):
         x, y = evt.x // 40, evt.y // 40
-        if self.board[x][y] == -1:
+        if self.board[y][x] == -1:
             self.draw_piece(x, y, 0)
 
-            self.board[x][y] = 0  # 下黑子
+            self.board[y][x] = 0  # 下黑子
             if win(self.board, x, y, 0):
                 tk.messagebox.showinfo(title='提示', message='黑子赢')
                 self.game_start()
@@ -74,8 +74,9 @@ class GameWin(tk.Frame):
             x, y, table = play(self.board, 1)  # 下白子
             self.draw_piece(x, y, 1)
             self.draw_value_table(table)
-            self.board[x][y] = 1  # 下白子
+            self.board[y][x] = 1  # 下白子
             # self.status = 0
+
             if win(self.board, x, y, 1):
                 tk.messagebox.showinfo(title='提示', message='白子赢')
                 self.game_start()
@@ -112,7 +113,7 @@ def win(grid, x, y, side):
             for o in range(-4 + i, -4 + i + 5):
                 if x + o < 0:
                     break
-                if grid[x + o][y] != side:
+                if grid[y][x + o] != side:
                     break
             else:
                 return True
@@ -125,7 +126,7 @@ def win(grid, x, y, side):
             for o in range(-4 + i, -4 + i + 5):
                 if y + o < 0:
                     break
-                if grid[x][y + o] != side:
+                if grid[y + o][x] != side:
                     break
             else:
                 return True
@@ -138,7 +139,7 @@ def win(grid, x, y, side):
             for o in range(-4 + i, -4 + i + 5):
                 if x + o < 0 or y + o < 0:
                     break
-                if grid[x + o][y + o] != side:
+                if grid[y + o][x + o] != side:
                     break
             else:
                 return True
@@ -151,7 +152,7 @@ def win(grid, x, y, side):
             for o in range(-4 + i, -4 + i + 5):
                 if x + o < 0 or y - o < 0:
                     break
-                if grid[x + o][y - o] != side:
+                if grid[y - o][x + o] != side:
                     break
             else:
                 return True

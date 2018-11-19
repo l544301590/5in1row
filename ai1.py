@@ -39,7 +39,7 @@ def play(board, side):
         for j in range(15):
             if table[i][j] > max_v:
                 max_v = table[i][j]
-                x, y = i, j
+                x, y = j, i
 
     return x, y, table
 
@@ -56,7 +56,7 @@ def value_table(board, side):
     for i in range(15):
         for j in range(15):
             if board[i][j] == -1:
-                value = value_(board, i, j, crt1, side) + value_(board, i, j, crt2, 1 - side)
+                value = value_(board, j, i, crt1, side) + value_(board, j, i, crt2, 1 - side)
                 table[i][j] = value
 
     return table
@@ -73,9 +73,9 @@ def value_(board, x, y, crt, side):
             for o in range(-4 + i, -4 + i + 5):
                 if x + o < 0:  # 下标越界（下标为负数在python中是合法的，需要另行判断）
                     raise IndexError  # 此处IndexError是为了另行判断下标为负的情况
-                if board[x + o][y] == 1 - side:  # 若出现对方棋子，则不得分，即不执行res += ...
+                if board[y][x+o] == 1 - side:  # 若出现对方棋子，则不得分，即不执行res += ...
                     raise IndexError  # 此处IndexError是为了break，并跳过res += crt[n]这句话
-                if board[x + o][y] == side:  # 若是自己的棋子，则计数
+                if board[y][x+o] == side:  # 若是自己的棋子，则计数
                     n += 1
             res += crt[n]
         except IndexError:
@@ -87,9 +87,9 @@ def value_(board, x, y, crt, side):
             for o in range(-4 + i, -4 + i + 5):
                 if y + o < 0:
                     raise IndexError
-                if board[x][y + o] == 1 - side:
+                if board[y + o][x] == 1 - side:
                     raise IndexError
-                if board[x][y + o] == side:
+                if board[y + o][x] == side:
                     n += 1
             res += crt[n]
         except IndexError:
@@ -101,9 +101,9 @@ def value_(board, x, y, crt, side):
             for o in range(-4 + i, -4 + i + 5):
                 if x + o < 0 or y + o < 0:
                     raise IndexError
-                if board[x + o][y + o] == 1 - side:
+                if board[y + o][x + o] == 1 - side:
                     raise IndexError
-                if board[x + o][y + o] == side:
+                if board[y + o][x + o] == side:
                     n += 1
             res += crt[n]
         except IndexError:
@@ -115,9 +115,9 @@ def value_(board, x, y, crt, side):
             for o in range(-4 + i, -4 + i + 5):
                 if x + o < 0 or y - o < 0:
                     raise IndexError
-                if board[x + o][y - o] == 1 - side:  # 若出现对方棋子，则不执行res += ...
+                if board[y - o][x + o] == 1 - side:  # 若出现对方棋子，则不执行res += ...
                     raise IndexError
-                if board[x + o][y - o] == side:
+                if board[y - o][x + o] == side:
                     n += 1
             res += crt[n]
         except IndexError:
@@ -141,13 +141,13 @@ if __name__ == '__main__':
     for i in range(len(all_responses)):
         myInput = all_requests[i]  # i回合我的输入
         myOutput = all_responses[i]  # i回合我的输出
-        b[myInput["x"]][myInput["y"]] = 0
-        b[myOutput["x"]][myOutput["y"]] = 1
+        b[myInput["y"]][myInput["x"]] = 0
+        b[myOutput["y"]][myOutput["x"]] = 1
 
     x, y = 8, 8
     curr_input = all_requests[-1]
     if curr_input["x"] >= 0 and curr_input["y"] >= 0:
-        b[curr_input["x"]][curr_input["y"]] = 0
+        b[curr_input["y"]][curr_input["x"]] = 0
         x, y, table = play(b, 1)
     else:
         b[8][8] = 1
